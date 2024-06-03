@@ -1,16 +1,19 @@
-export default function Post() {
+import { formatISO9075 } from "date-fns";
+
+export default function Post({ title, summary, cover, content, createdAt }) {
     return (
         <div className="post">
             <div className="image">
                 <img src="https://lifehacker.com/imagery/articles/01HY42WNG2R4DTVJ1RM69VM3TX/hero-image.fill.size_1200x675.jpg" alt="" />
             </div>
             <div className="texts">
-                <h2>Slack Is Using Your Private Conversations to Train Its AI</h2>
+                <h2>{title}</h2>
                 <p className="info">
+                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <a className="author">LokmanKhodziri</a>
-                    <time>2024-05-17 16:44</time>
+                    <time>{formatISO9075(new Date(createdAt))}</time>
                 </p>
-                <p className="summary">Slack users across the web—on Mastodon, on Threads, and on Hackernews—have responded with alarm to an obscure privacy page that outlines the ways in which their Slack conversations, including DMs, are used to train what the Salesforce-owned company calls "Machine Learning" (ML) and "Artificial Intelligence" (AI) systems.</p>
+                <p className="summary">{summary}</p>
             </div>
         </div>
     );
