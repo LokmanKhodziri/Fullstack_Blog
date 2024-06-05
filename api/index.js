@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const port = 5050;
@@ -24,7 +25,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
-app.use('/uploads', express.static(__dirname + '/uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 mongoose.connect('mongodb+srv://admin:admin1234@cluster0.nqggchq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => console.log('Connected to MongoDB'))
@@ -88,14 +89,16 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
             return res.status(400).json({ message: 'File upload failed' });
         }
 
-        const { originalname, path } = req.file;
+        const { originalname, path: tempPath } = req.file;
         const parts = originalname.split('.');
         const ext = parts[parts.length - 1];
         const newFileName = `${req.file.filename}.${ext}`;
-        //const newPath = `${__dirname}/uploads/${newFileName}`;
-        const relativePath = `/uploads/${newFileName}`; // This is the path to be stored in the database
+        const newPath = path.join(__dirname, 'uploads', newFileName);
+        const relativePath = `/uploads/${newFileName}`;
 
-        fs.renameSync(path, newPath);
+        fs.renameSync(tempPath, newPath);
+
+        //console.log(`File saved at: ${relativePath}`); // Logging for debugging
 
         const { token } = req.cookies;
         if (!token) {
@@ -112,7 +115,7 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
                     title,
                     summary,
                     content,
-                    cover: relativePath,
+                    cover: relativePath, // Store the relative path in the database
                     author: decoded.id,
                 });
                 res.json(postDoc);
@@ -135,4 +138,6 @@ app.get('/post', async (req, res) => {
     res.json(posts);
 });
 
-app.listen(port);
+app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+});
