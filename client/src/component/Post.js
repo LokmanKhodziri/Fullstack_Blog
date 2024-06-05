@@ -1,11 +1,12 @@
 import { formatISO9075 } from "date-fns";
 
 export default function Post({ title, summary, cover, content, createdAt, author }) {
+    console.log({ title, summary, cover, content, createdAt, author }); // Add this line for debugging
 
     return (
         <div className="post">
             <div className="image">
-                <img src={cover} alt={title} />
+                <img src={`http://localhost:5050${cover}`} alt={title} />
             </div>
             <div className="texts">
                 <h2>{title}</h2>
