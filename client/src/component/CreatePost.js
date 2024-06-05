@@ -27,18 +27,22 @@ export default function CreatePage() {
     const [redirect, setRedirect] = useState(false);
 
     async function createNewPost(ev) {
+        ev.preventDefault();
         const data = new FormData();
         data.set('title', title);
         data.set('summary', summary);
         data.set('content', content);
         data.set('file', files[0]);
-        ev.preventDefault();
         const response = await fetch('http://localhost:5050/post', {
             method: 'POST',
             body: data,
+            credentials: 'include',
         });
         if (response.ok) {
             setRedirect(true);
+        } else {
+            const errorData = await response.json();
+            console.error('Error creating post: ', errorData);
         }
     }
 
@@ -57,7 +61,6 @@ export default function CreatePage() {
                 value={summary}
                 onChange={ev => setSummary(ev.target.value)} />
             <input type="file"
-                //value={files}
                 onChange={ev => setFiles(ev.target.files)} />
             <ReactQuill
                 value={content}

@@ -21,10 +21,10 @@ app.use(cors({
     methods: ['POST', 'GET'],
     allowedHeaders: ['Content-Type'],
     credentials: true,
-    origin: 'http://localhost:3000',
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 mongoose.connect('mongodb+srv://admin:admin1234@cluster0.nqggchq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => console.log('Connected to MongoDB'))
@@ -83,25 +83,55 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
-    const { originalname, path } = req.file;
-    const parts = originalname.split('.');
-    const ext = parts[parts.length - 1];
-    const newPath = path + '.' + ext;
-    fs.renameSync(path, newPath);
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: 'File upload failed' });
+        }
 
-    const { title, summary, content } = req.body;
-    const postDoc = await Post.create({
-        title,
-        summary,
-        content,
-        cover: newPath,
-    });
+        const { originalname, path } = req.file;
+        const parts = originalname.split('.');
+        const ext = parts[parts.length - 1];
+        const newFileName = `${req.file.filename}.${ext}`;
+        //const newPath = `${__dirname}/uploads/${newFileName}`;
+        const relativePath = `/uploads/${newFileName}`; // This is the path to be stored in the database
 
-    res.json(postDoc);
+        fs.renameSync(path, newPath);
+
+        const { token } = req.cookies;
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided' });
+        }
+
+        jwt.verify(token, secret, async (err, decoded) => {
+            if (err) {
+                return res.status(401).json({ message: 'Invalid token' });
+            }
+            const { title, summary, content } = req.body;
+            try {
+                const postDoc = await Post.create({
+                    title,
+                    summary,
+                    content,
+                    cover: relativePath,
+                    author: decoded.id,
+                });
+                res.json(postDoc);
+            } catch (e) {
+                console.error(e);
+                res.status(500).json({ message: 'Post creation failed' });
+            }
+        });
+    } catch (error) {
+        console.error('Error uploading file:', error);
+        res.status(500).json({ message: 'An unexpected error occurred' });
+    }
 });
 
 app.get('/post', async (req, res) => {
-    const posts = await Post.find();
+    const posts = await Post.find()
+        .populate('author', ['username'])
+        .sort({ createdAt: 'desc' })
+        .limit(10);
     res.json(posts);
 });
 
