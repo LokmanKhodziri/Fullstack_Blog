@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+a{
+    cursor: pointer;
+}
+
 body{
     color: #222;
 }
@@ -96,6 +100,7 @@ input{
 }
 
 button{
+    cursor: pointer;
     width: 100%;
     display: block;
     background-color: azure;
@@ -147,4 +152,25 @@ div.post-page a{
 div.post-page div.content p{
     margin: 10px 0;
     line-height: 1.4rem;
+}
+
+div.edit-post{
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+div.post-page a.edit-btn{
+    background-color: #222;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    padding: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+a svg{
+    width: 20px;
+    height: 20px;
 }

@@ -5,6 +5,7 @@ import IndexPage from './component/IndexPage';
 import LoginPage from './component/LoginPage';
 import RegisterPage from './component/RegisterPage';
 import CreatePost from './component/CreatePost'
+import EditPost from './component/EditPost';
 import { UserContextProvider } from './component/UserContext';
 import PostPage from './component/PostPage';
 
@@ -18,6 +19,7 @@ function App() {
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/create' element={<CreatePost />} />
           <Route path='/post/:id' element={<PostPage />} />
+          <Route path='/edit/:id' element={<EditPost />} />
         </Route>
       </Routes>
     </UserContextProvider>

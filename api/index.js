@@ -19,7 +19,7 @@ const secret = 'asdjf134as';
 
 app.use(cors({
     origin: 'http://localhost:3000',
-    methods: ['POST', 'GET'],
+    methods: ['POST', 'GET', 'PUT',],
     allowedHeaders: ['Content-Type'],
     credentials: true,
 }));
@@ -129,6 +129,56 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
         res.status(500).json({ message: 'An unexpected error occurred' });
     }
 });
+
+app.put('/post', uploadMiddleware.single('file'), async (req, res) => {
+    let newPath = null;
+    try {
+        const { token } = req.cookies;
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided' });
+        }
+
+        jwt.verify(token, secret, async (err, info) => {
+            if (err) {
+                return res.status(401).json({ message: 'Invalid token' });
+            }
+
+            const { id, title, summary, content } = req.body;
+            const postDoc = await Post.findById(id);
+            if (!postDoc) {
+                return res.status(404).json({ message: 'Post not found' });
+            }
+
+            if (postDoc.author.toString() !== info.id) {
+                return res.status(403).json({ message: 'Unauthorized' });
+            }
+
+            if (req.file) {
+                const { originalname, path: tempPath } = req.file;
+                const parts = originalname.split('.');
+                const ext = parts[parts.length - 1];
+                const newFileName = `${req.file.filename}.${ext}`;
+                newPath = path.join(__dirname, 'uploads', newFileName);
+                const relativePath = `/uploads/${newFileName}`;
+
+                fs.renameSync(tempPath, newPath);
+                postDoc.cover = relativePath;
+            }
+
+            postDoc.title = title;
+            postDoc.summary = summary;
+            postDoc.content = content;
+
+            await postDoc.save();
+
+            res.json(postDoc);
+        });
+    } catch (error) {
+        console.error('Error updating post:', error);
+        res.status(500).json({ message: 'Post update failed' });
+    }
+});
+
 
 app.get('/post', async (req, res) => {
     const posts = await Post.find()
