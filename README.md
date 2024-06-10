@@ -119,7 +119,7 @@ const PostCardComponent = ({ post }) => {
   );
 };
 
-export default PostCardComponent;]
+export default PostCardComponent;
 
 ## API Endpoints
 
