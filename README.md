@@ -99,9 +99,7 @@ export default HeaderComponent;
 ### PostCardComponent
 
 * The PostCardComponent is a reusable component that displays a single blog post in a card format. It shows the post title, author, date, and a brief summary.
-
-
-import React from 'react';
+* import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PostCardComponent = ({ post }) => {
@@ -121,8 +119,7 @@ const PostCardComponent = ({ post }) => {
   );
 };
 
-export default PostCardComponent;
-
+export default PostCardComponent;]
 
 ## API Endpoints
 
