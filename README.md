@@ -62,7 +62,7 @@ MyBlog is a simple blog application built with React, React Router, Express, Mon
 
 The HeaderComponent is a navigation bar that displays the application's logo and provides links to the main sections of the blog.
 
-```javascript
+```js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -92,14 +92,16 @@ const HeaderComponent = () => {
     </nav>
   );
 };
+```
 
 export default HeaderComponent;
-
 
 ### PostCardComponent
 
 * The PostCardComponent is a reusable component that displays a single blog post in a card format. It shows the post title, author, date, and a brief summary.
-* import React from 'react';
+
+```js
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PostCardComponent = ({ post }) => {
@@ -119,7 +121,8 @@ const PostCardComponent = ({ post }) => {
   );
 };
 
-export default PostCardComponent;]
+export default PostCardComponent;
+```
 
 ## API Endpoints
 
