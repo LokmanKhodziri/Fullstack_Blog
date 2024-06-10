@@ -1,26 +1,25 @@
 # MyBlog
-================
 
 ## Description
 
-MyBlog is a simple blog application built with React, React Router, Express, MongoDB and NodeJS.
+MyBlog is a simple blog application built with React, React Router, Express, MongoDB, and NodeJS.
 
 ## Features
 
-* [Feature 1]: User authentication and authorization 
-* [Feature 2]: Create new posts
-* [Feature 3]: Edit post
+- User authentication and authorization
+- Create new posts
+- Edit posts
 
 ## Getting Started
 
 ### Prerequisites
 
-* Node.js: Node.js is required to run the project. You can download and install Node.js from the official website.
-* npm or yarn: npm (Node Package Manager) or yarn is required to manage dependencies and install packages. You can use either npm or yarn, but npm is the default package manager for Node.js.
-* MongoDB: MongoDB is required to store data. You can download and install MongoDB from the official website
-* React: React is required as the frontend framework for the project. You can install React using npm or yarn.
-* React Router: React Router is required for client-side routing in the project. You can install React Router using npm or yarn.
-* Express.js: Express.js is required as the backend framework for the project. You can install Express.js using npm or yarn.
+- **Node.js**: Node.js is required to run the project. You can download and install Node.js from the official website.
+- **npm or yarn**: npm (Node Package Manager) or yarn is required to manage dependencies and install packages. You can use either npm or yarn, but npm is the default package manager for Node.js.
+- **MongoDB**: MongoDB is required to store data. You can download and install MongoDB from the official website.
+- **React**: React is required as the frontend framework for the project. You can install React using npm or yarn.
+- **React Router**: React Router is required for client-side routing in the project. You can install React Router using npm or yarn.
+- **Express.js**: Express.js is required as the backend framework for the project. You can install Express.js using npm or yarn.
 
 ### Installation
 
@@ -30,37 +29,42 @@ MyBlog is a simple blog application built with React, React Router, Express, Mon
 
 ### Usage
 
-## Here are some instructions on how to use the MyBlog application:
+#### Getting Started
 
-## Getting Started
-* Open a web browser and navigate to http://localhost:3000 to access the MyBlog application.
-* You will see a navigation bar at the top of the page with links to the Home, About, and Contact pages.
+- Open a web browser and navigate to `http://localhost:3000` to access the MyBlog application.
+- You will see a navigation bar at the top of the page with links to the Home, About, and Contact pages.
 
-## Register and login
-* Click on the "Register" button in the navigation bar to create an account.
-* After successfuly created an acccount, continue to login before able to create any post.
+#### Register and Login
 
-## Creating a New Post
-* Click on the "Create New Post" button in the navigation bar.
-* Fill in the title, author, and content fields for your new post.
-* Click the "Create Post" button to save your post.
+- Click on the "Register" button in the navigation bar to create an account.
+- After successfully creating an account, continue to log in before creating any post.
 
-## Viewing Posts
-* Click on the "Home" link in the navigation bar to view a list of all posts.
-* Click on a post title to view the full post.
+#### Creating a New Post
 
-## Editing a Post
-* Click on the "Edit" button next to a post title to edit the post.
-* Make changes to the title, author, and content fields as needed.
-* Click the "Update Post" button to save your changes.
+- Click on the "Create New Post" button in the navigation bar.
+- Fill in the title, author, and content fields for your new post.
+- Click the "Create Post" button to save your post.
+
+#### Viewing Posts
+
+- Click on the "Home" link in the navigation bar to view a list of all posts.
+- Click on a post title to view the full post.
+
+#### Editing a Post
+
+- Click on the "Edit" button next to a post title to edit the post.
+- Make changes to the title, author, and content fields as needed.
+- Click the "Update Post" button to save your changes.
 
 ## Components
 
 ### HeaderComponent
 
-* The HeaderComponent is a navigation bar that displays the application's logo and provides links to main sections of the blog.
-* import React from 'eact';
-import { Link } from 'eact-router-dom';
+The HeaderComponent is a navigation bar that displays the application's logo and provides links to the main sections of the blog.
+
+```javascript
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HeaderComponent = () => {
   return (
@@ -90,6 +94,7 @@ const HeaderComponent = () => {
 };
 
 export default HeaderComponent;
+
 
 ### PostCardComponent
 
