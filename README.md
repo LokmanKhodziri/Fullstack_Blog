@@ -24,7 +24,7 @@ MyBlog is a simple blog application built with React, React Router, Express, Mon
 
 ### Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/your-repo-name.git`
+1. Clone the repository: `git clone https://github.com/LokmanKhodziri/Fullstack_Blog.git`
 2. Install dependencies: `npm install` or `yarn install`
 3. Start the application: `npm start` or `yarn start`
 
